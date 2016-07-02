@@ -1,0 +1,4 @@
+name: SkullGallery
+main: org.inventivetalent.skullgallery.SkullGallery
+author: inventivetalent
+version: ${project.version}
