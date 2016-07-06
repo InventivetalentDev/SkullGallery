@@ -20,10 +20,14 @@ import org.inventivetalent.pluginannotations.PluginAnnotations;
 import org.inventivetalent.pluginannotations.command.Command;
 import org.inventivetalent.pluginannotations.command.OptionalArg;
 import org.inventivetalent.pluginannotations.command.Permission;
+import org.inventivetalent.skullclient.SkullCallback;
+import org.inventivetalent.skullclient.SkullClient;
+import org.inventivetalent.skullclient.SkullData;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
@@ -125,6 +129,46 @@ public class SkullGallery extends JavaPlugin implements Listener {
 				}
 			}
 		});
+	}
+
+	@Command(name = "createSkull",
+			 aliases = {
+					 "addSkull",
+					 "newSkull" },
+			 usage = "<url>",
+			 description = "Add a skull to the gallery. Generates a skull from the URL.",
+			 min = 1,
+			 max = 1,
+			 fallbackPrefix = "skullgallery")
+	@Permission("skullgallery.create")
+	public void createSkull(final Player sender, String urlString) {
+		try {
+			URL url = new URL(urlString);
+			SkullClient.create(url, new SkullCallback() {
+				@Override
+				public void waiting(long l) {
+					sender.sendMessage("§7Waiting " + (l / 1000D) + "s for upload...");
+				}
+
+				@Override
+				public void uploading() {
+					sender.sendMessage("§7Generating skull...");
+				}
+
+				@Override
+				public void error(String s) {
+					sender.sendMessage("§cUnexpected error: " + s);
+				}
+
+				@Override
+				public void done(SkullData skullData) {
+					sender.sendMessage("§aNew skull generated!");
+				}
+			});
+		} catch (MalformedURLException e) {
+			sender.sendMessage("§cInvalid URL");
+			return;
+		}
 	}
 
 	@EventHandler

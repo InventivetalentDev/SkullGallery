@@ -55,6 +55,7 @@
                                     <include>org.inventivetalent:pluginannotations**</include>
                                     <include>org.inventivetalent:reflectionhelper**</include>
                                     <include>org.inventivetalent:mc-wrappers**</include>
+                                    <include>org.inventivetalent:skullclient**</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -112,7 +113,12 @@
         <dependency>
             <groupId>org.inventivetalent</groupId>
             <artifactId>mc-wrappers</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>skullclient</artifactId>
+            <version>1.1.0</version>
         </dependency>
 
         <dependency>
